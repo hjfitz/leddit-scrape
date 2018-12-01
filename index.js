@@ -47,8 +47,9 @@ fetch(url).then(resp => resp.json()).then(({ data }) => {
 		const isImage = Boolean(~contentType.indexOf('image/'))
 		const filename = `${entry.name}.${ext}`
 		if (!isImage) return undefined
-		console.log(filename)
-		const dest = fs.createWriteStream(path.join(subDir, filename))
-		resp.body.pipe(dest)
+		const dest = path.join(subDir, filename)
+		console.log('saving', dest)
+		const write = fs.createWriteStream(dest)
+		resp.body.pipe(write)
 	}))
 })
